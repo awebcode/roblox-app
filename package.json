@@ -22,6 +22,8 @@
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.487.0",
     "next": "15.2.4",
+    "noblox.js": "^6.1.1",
+    "node-html-parser": "^7.0.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.55.0",

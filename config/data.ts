@@ -84,11 +84,17 @@ export const defaultSEOdata: Metadata = {
   // Dynamic icons configuration (use Roblox-themed icons)
   icons: {
     icon: [
-      { url: `${appUrl}/favicon.ico`, type: "image/x-icon" },
-      { url: `${appUrl}/apple-touch-icon.png`, type: "image/png" },
+      {
+        url: `https://images.rbxcdn.com/7c5fe83dffa97250aaddd54178900ea7.png`,
+        type: "image/x-icon",
+      },
+      {
+        url: `https://images.rbxcdn.com/7c5fe83dffa97250aaddd54178900ea7.png`,
+        type: "image/png",
+      },
     ],
-    shortcut: `${appUrl}/favicon.ico`,
-    apple: `${appUrl}/apple-touch-icon.png`,
+    shortcut: `https://images.rbxcdn.com/7c5fe83dffa97250aaddd54178900ea7.png`,
+    apple: `https://images.rbxcdn.com/7c5fe83dffa97250aaddd54178900ea7.png`,
   },
 
   // Additional metadata
