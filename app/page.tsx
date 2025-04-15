@@ -119,7 +119,7 @@ export default function Home() {
   const [cookie, setCookie] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [name,  setName] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(null);
 
   const {
     register,
@@ -144,7 +144,9 @@ export default function Home() {
     },
     onError: (error: any) => {
       console.error("Login failed:", error);
-      toast.error( error?.response?.data?.error || "Login failed. Please check your credentials.");
+      toast.error(
+        error?.response?.data?.error || "Login failed. Please check your credentials."
+      );
     },
   });
 
@@ -196,7 +198,13 @@ export default function Home() {
             variant="outline"
             className="w-full cursor-pointer border-neutral-600 text-white bg-transparent hover:bg-neutral-700 hover:text-white transition-colors"
           >
-            {mutation.isPending ? <><Loader2 className="mr-2 animate-spin" /> Logging in...</> : "Log In"}
+            {mutation.isPending ? (
+              <>
+                <Loader2 className="mr-2 animate-spin" /> Logging in...
+              </>
+            ) : (
+              "Log In"
+            )}
           </Button>
         </form>
         <div className="grid gap-1.5">
