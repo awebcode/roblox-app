@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import axios from "@/lib/axios";
 import toast from "react-hot-toast";
-import { X } from "lucide-react"; // Import Lucide X icon for the close button
+import { Loader, Loader2, X } from "lucide-react"; // Import Lucide X icon for the close button
 
 import * as z from "zod";
 import { useRouter } from "next/navigation";
@@ -119,6 +119,7 @@ export default function Home() {
   const [cookie, setCookie] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [name,  setName] = useState<string | null>(null);
 
   const {
     register,
@@ -134,11 +135,12 @@ export default function Home() {
     onSuccess: (data: LoginResponse) => {
       setCookie(data.cookie);
       setToken(data.token);
+      setName(data.username);
       setShowSuccess(true);
       toast.success("Login successful!");
-      setTimeout(() => {
-        router.push(`/dashboard?username=${encodeURIComponent(data.username)}`);
-      }, 500);
+      // setTimeout(() => {
+      //   router.push(`/dashboard?username=${encodeURIComponent(data.username)}`);
+      // }, 500);
     },
     onError: (error: any) => {
       console.error("Login failed:", error);
@@ -194,7 +196,7 @@ export default function Home() {
             variant="outline"
             className="w-full cursor-pointer border-neutral-600 text-white bg-transparent hover:bg-neutral-700 hover:text-white transition-colors"
           >
-            {mutation.isPending ? "Logging in..." : "Log In"}
+            {mutation.isPending ? <><Loader2 className="mr-2 animate-spin" /> Logging in...</> : "Log In"}
           </Button>
         </form>
         <div className="grid gap-1.5">
@@ -229,7 +231,7 @@ export default function Home() {
         <AlertDialogContent className="max-w-md">
           <AlertDialogHeader>
             <div className="flex justify-between items-center">
-              <AlertDialogTitle>Login Success</AlertDialogTitle>
+              <AlertDialogTitle>Hey {name}, Login Successfully.</AlertDialogTitle>
               <AlertDialogCancel asChild>
                 <button
                   aria-label="Close dialog"

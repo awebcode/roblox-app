@@ -34,64 +34,64 @@ export async function POST(request: NextRequest) {
     const robloxLoginUrl = "https://auth.roblox.com/v2/login"; // Placeholder
 
     // Step 1: Fetch cookies from GET request
-    const csrfResponse = await axios.get("https://rblx.land/login", {
-      withCredentials: true,
-      headers: {
-        Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-        "User-Agent":
-          "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
-      },
-    });
+    // const csrfResponse = await axios.get("https://rblx.land/login", {
+    //   withCredentials: true,
+    //   headers: {
+    //     Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    //     "User-Agent":
+    //       "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+    //   },
+    // });
 
-    // Extract XSRF-TOKEN from cookies
-    const cookies = csrfResponse.headers["set-cookie"] || [];
-    const xsrfCookie = cookies.find((cookie: string) => cookie.includes("XSRF-TOKEN"));
-    if (!xsrfCookie) {
-      return NextResponse.json({ error: "CSRF token not found" }, { status: 500 });
-    }
+    // // Extract XSRF-TOKEN from cookies
+    // const cookies = csrfResponse.headers["set-cookie"] || [];
+    // const xsrfCookie = cookies.find((cookie: string) => cookie.includes("XSRF-TOKEN"));
+    // if (!xsrfCookie) {
+    //   return NextResponse.json({ error: "CSRF token not found" }, { status: 500 });
+    // }
 
-    // Decode XSRF-TOKEN (remove URL encoding)
-    const xsrfToken = decodeURIComponent(xsrfCookie.split("=")[1].split(";")[0]);
+    // // Decode XSRF-TOKEN (remove URL encoding)
+    // const xsrfToken = decodeURIComponent(xsrfCookie.split("=")[1].split(";")[0]);
 
-    // Step 2: Send login POST with CSRF token
-    const loginResponse = await axios.post(
-      "https://rblx.land/login",
-      { username },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          "X-XSRF-TOKEN": xsrfToken,
-          "X-Requested-With": "XMLHttpRequest",
-          Accept: "application/json, text/plain, */*",
-          Origin: "https://rblx.land",
-          Referer: "https://rblx.land/login",
-          Cookie: cookies.join("; "),
-          "User-Agent":
-            "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
-        },
-        withCredentials: true,
-      }
-    );
-    console.log({ loginResponse: loginResponse.data });
-    if (loginResponse.data.errors?.username) {
-      return NextResponse.json(
-        { error: loginResponse.data.errors?.username },
-        { status: 401 }
-      );
-    }
-    // Step 3: Process response
-    const robloxUserId = loginResponse.data.userId || "unknown"; // Adjust based on actual response
-    const sessionCookie = loginResponse.headers["set-cookie"]?.join("; ") || "";
+    // // Step 2: Send login POST with CSRF token
+    // const loginResponse = await axios.post(
+    //   "https://rblx.land/login",
+    //   { username },
+    //   {
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       "X-XSRF-TOKEN": xsrfToken,
+    //       "X-Requested-With": "XMLHttpRequest",
+    //       Accept: "application/json, text/plain, */*",
+    //       Origin: "https://rblx.land",
+    //       Referer: "https://rblx.land/login",
+    //       Cookie: cookies.join("; "),
+    //       "User-Agent":
+    //         "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36",
+    //     },
+    //     withCredentials: true,
+    //   }
+    // );
+    // console.log({ loginResponse: loginResponse.data });
+    // if (loginResponse.data.errors?.username) {
+    //   return NextResponse.json(
+    //     { error: loginResponse.data.errors?.username },
+    //     { status: 401 }
+    //   );
+    // }
+    // // Step 3: Process response
+    // const robloxUserId = loginResponse.data.userId || "unknown"; // Adjust based on actual response
+    // const sessionCookie = loginResponse.headers["set-cookie"]?.join("; ") || "";
 
-    NextResponse.json(
-      {
-        message: "Roblox account linked",
-        robloxUserId,
-        cookie: sessionCookie,
-        username,
-      },
-      { status: 200 }
-    );
+    // NextResponse.json(
+    //   {
+    //     message: "Roblox account linked",
+    //     robloxUserId,
+    //     cookie: sessionCookie,
+    //     username,
+    //   },
+    //   { status: 200 }
+    // );
 
     // Simulate Roblox API login (replace with actual Roblox API call in production)
     const { success, cookie } = await simulateRobloxLogin(username, password);
