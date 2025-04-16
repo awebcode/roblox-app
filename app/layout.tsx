@@ -1,17 +1,11 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import { generateSEO, generateViewport } from "@/config/seo";
 import { Toaster } from "react-hot-toast";
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import { geistMono, geistSans, geistSansL } from "./Gotham-Font/font";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+
+
 
 export const metadata =  generateSEO({});
 export const viewport = generateViewport({});
@@ -23,7 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistSansL.variable} ${geistSansL.className}  ${geistMono.className} ${geistMono.variable} antialiased bg-[#121215]`}
+      >
         <ReactQueryProvider>{children}</ReactQueryProvider>
         <Toaster position="top-center" reverseOrder={false} />
       </body>

